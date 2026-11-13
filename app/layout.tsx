@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = { width: 'device-width', initialScale: 1 };
 
-const themeScript = `try{var t=localStorage.getItem('cpdocs.theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}`;
+const themeScript = `document.documentElement.classList.add('js');try{var t=localStorage.getItem('cpdocs.theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

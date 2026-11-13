@@ -31,6 +31,11 @@ function render(md: string) {
         if (token.depth === 2 || token.depth === 3) headings.push({ id, text: token.text, depth: token.depth });
         return `<h${token.depth} id="${id}"><a class="anchor" href="#${id}" aria-hidden="true">#</a>${this.parser.parseInline(token.tokens)}</h${token.depth}>\n`;
       },
+      code(token) {
+        const lang = (token.lang ?? '').split(/\s+/)[0] || 'text';
+        const esc = token.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        return `<div class="codeblock"><div class="code-head"><span class="code-lang">${lang}</span><button type="button" class="copy-btn" aria-label="Copy ${lang} code to the clipboard"><svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216 32H88a8 8 0 0 0-8 8v40H40a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h128a8 8 0 0 0 8-8v-40h40a8 8 0 0 0 8-8V40a8 8 0 0 0-8-8Zm-56 176H48V96h112Zm48-48h-32V88a8 8 0 0 0-8-8H96V48h112Z"/></svg><span class="copy-label">Copy</span></button></div><pre><code>${esc}</code></pre></div>\n`;
+      },
       table(token) {
         // wrap tables so they scroll sideways on phones
         const head = token.header.map((c) => `<th>${this.parser.parseInline(c.tokens)}</th>`).join('');

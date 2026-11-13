@@ -1,0 +1,162 @@
+[
+ {
+  "file": "dashboard-light.webp",
+  "title": "Dashboard",
+  "caption": "The state of the whole fleet at a glance: what needs approval, what is quarantined, security updates and the next patch days.",
+  "theme": "light",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "dashboard-dark.webp",
+  "title": "Dashboard",
+  "caption": "The state of the whole fleet at a glance: what needs approval, what is quarantined, security updates and the next patch days.",
+  "theme": "dark",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "hosts-light.webp",
+  "title": "Hosts",
+  "caption": "Every machine with its group, status and pending updates, searchable and filterable.",
+  "theme": "light",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "hosts-dark.webp",
+  "title": "Hosts",
+  "caption": "Every machine with its group, status and pending updates, searchable and filterable.",
+  "theme": "dark",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "host-light.webp",
+  "title": "Host detail",
+  "caption": "Hardware, agent, resources and the automatic patching state of one machine.",
+  "theme": "light",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "host-dark.webp",
+  "title": "Host detail",
+  "caption": "Hardware, agent, resources and the automatic patching state of one machine.",
+  "theme": "dark",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "tasks-light.webp",
+  "title": "Tasks and approvals",
+  "caption": "A patch awaiting approval, with the full risk reasoning behind the decision.",
+  "theme": "light",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "tasks-dark.webp",
+  "title": "Tasks and approvals",
+  "caption": "A patch awaiting approval, with the full risk reasoning behind the decision.",
+  "theme": "dark",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "policies-light.webp",
+  "title": "Policy editor",
+  "caption": "Choose what is applied, when, and how it is rolled back, per group.",
+  "theme": "light",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "policies-dark.webp",
+  "title": "Policy editor",
+  "caption": "Choose what is applied, when, and how it is rolled back, per group.",
+  "theme": "dark",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "docker-light.webp",
+  "title": "Docker",
+  "caption": "Container images across hosts, with newer tags suggested and applied through the compose file.",
+  "theme": "light",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "docker-dark.webp",
+  "title": "Docker",
+  "caption": "Container images across hosts, with newer tags suggested and applied through the compose file.",
+  "theme": "dark",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "app-center-light.webp",
+  "title": "App center",
+  "caption": "Approved applications, installed or needing an update, for each machine.",
+  "theme": "light",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "app-center-dark.webp",
+  "title": "App center",
+  "caption": "Approved applications, installed or needing an update, for each machine.",
+  "theme": "dark",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "notifications-light.webp",
+  "title": "Notifications",
+  "caption": "Rules that route events to e-mail, ntfy, Gotify or signed webhooks.",
+  "theme": "light",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "notifications-dark.webp",
+  "title": "Notifications",
+  "caption": "Rules that route events to e-mail, ntfy, Gotify or signed webhooks.",
+  "theme": "dark",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "logs-light.webp",
+  "title": "Logs",
+  "caption": "What the server did: task changes, deliveries and its own messages, newest first.",
+  "theme": "light",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "logs-dark.webp",
+  "title": "Logs",
+  "caption": "What the server did: task changes, deliveries and its own messages, newest first.",
+  "theme": "dark",
+  "width": 1440,
+  "height": 900
+ },
+ {
+  "file": "dashboard-phone-light.webp",
+  "title": "Dashboard on a phone",
+  "caption": "The interface adapts to small screens.",
+  "theme": "light",
+  "width": 390,
+  "height": 844
+ },
+ {
+  "file": "dashboard-phone-dark.webp",
+  "title": "Dashboard on a phone",
+  "caption": "The interface adapts to small screens.",
+  "theme": "dark",
+  "width": 390,
+  "height": 844
+ }
+]

@@ -33,31 +33,6 @@ a:hover { color: var(--primary-hover); }
 
 /* layout */
 .page { max-width: var(--container); margin: 0 auto; padding: 2rem 1rem; }
-.doc-shell { max-width: var(--container); margin: 0 auto; padding: 1rem; display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); }
-.side-wrap { border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
-.side-wrap > summary { padding: .65rem .9rem; cursor: pointer; font-weight: 500; }
-.side { padding: 0 .5rem .75rem; display: grid; }
-.side a { padding: .35rem .6rem; border-radius: 6px; color: var(--fg); text-decoration: none; font-size: .92rem; }
-.side a:hover { background: var(--surface-hover); }
-.side a[aria-current="page"] { background: var(--primary-subtle); color: var(--primary-text); font-weight: 500; }
-.side-group { margin: .75rem .6rem .2rem; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-muted); font-weight: 700; }
-.toc { display: none; }
-@media (min-width: 900px) {
-  .doc-shell { grid-template-columns: 15rem minmax(0, 1fr); gap: 2rem; padding-top: 2rem; }
-  .side-wrap { border: 0; background: none; position: sticky; top: 4.5rem; align-self: start; max-height: calc(100vh - 5.5rem); overflow: auto; }
-  .side-wrap > summary { display: none; }
-  .side-wrap .side { padding: 0; }
-  .side-wrap:not([open]) .side { display: grid; }
-}
-@media (min-width: 1200px) {
-  .doc-shell { grid-template-columns: 15rem minmax(0, 1fr) 13rem; }
-  .toc { display: block; position: sticky; top: 4.5rem; align-self: start; font-size: .85rem; max-height: calc(100vh - 5.5rem); overflow: auto; }
-  .toc p { margin: 0 0 .4rem; font-weight: 700; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-muted); }
-  .toc a { display: block; padding: .2rem 0 .2rem .75rem; color: var(--fg-muted); text-decoration: none; border-left: 1px solid var(--border); }
-  .toc a.sub { padding-left: 1.5rem; }
-  .toc a:hover { color: var(--primary-text); border-left-color: var(--primary); }
-}
-
 /* prose */
 .prose { min-width: 0; max-width: 46rem; }
 .crumb { margin: 0; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--primary-text); font-weight: 700; }

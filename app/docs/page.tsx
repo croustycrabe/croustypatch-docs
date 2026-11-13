@@ -1,3 +1,2 @@
-import SectionIndex from '@/components/SectionIndex';
-export const metadata = { title: 'User guide' };
-export default function Page() { return <SectionIndex section="user" />; }
+import { redirect } from 'next/navigation';
+export default function Page() { redirect('/docs/quickstart/'); }

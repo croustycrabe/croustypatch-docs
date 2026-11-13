@@ -62,7 +62,7 @@ export default function Search() {
   return (
     <div className="search" ref={box}>
       <input
-        ref={ref} type="search" value={q} placeholder="Search the docs  ( / )" aria-label="Search the documentation"
+        ref={ref} type="search" value={q} placeholder="Search docs" aria-label="Search the documentation"
         role="combobox" aria-expanded={open && q.length > 0} aria-controls="search-results" autoComplete="off"
         onFocus={() => { load(); setOpen(true); }}
         onChange={(e) => { setQ(e.target.value); setActive(0); setOpen(true); }}
@@ -73,6 +73,7 @@ export default function Search() {
           else if (e.key === 'Escape') { setOpen(false); ref.current?.blur(); }
         }}
       />
+      <kbd className="search-key" aria-hidden="true">/</kbd>
       {open && q.trim() && (
         <ul id="search-results" className="search-results" role="listbox">
           {hits.length === 0 && <li className="empty">{items ? 'No result.' : 'Loading…'}</li>}

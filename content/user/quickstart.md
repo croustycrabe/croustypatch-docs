@@ -1,5 +1,5 @@
 ---
-title: Quickstart
+title: Getting started
 description: From nothing to a patched machine in about ten minutes.
 order: 1
 group: Get started
