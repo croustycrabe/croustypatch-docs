@@ -4,51 +4,58 @@ description: "Run the server with Docker Compose: copy-paste quickstart, first l
 order: 2
 group: Get started
 ---
-The server ships as a container image, **`{{image}}`**, next to a PostgreSQL container. One Compose file runs both.
+The server ships as a container image, **`{{image}}`**, and runs next to a PostgreSQL 17 container. One Compose file runs both, and everything is configured from a `.env` file.
 
-> Replace the image owner once: `OWNER` in the image name stands for the GitHub account that publishes it (see the [project on GitHub]({{repoUrl}})).
+> `OWNER` in the image name stands for the GitHub account that publishes it: see the [project on GitHub]({{repoUrl}}).
 
 ## Requirements
 
-- A 64-bit Linux host with Docker and the Compose plugin.
+- A 64-bit Linux host with Docker and the Compose plugin (v2), and `openssl`.
 - A DNS name for the server (for example `patch.example.com`), because agents connect to it.
-- A TLS 1.3 front: either the server's own certificate handling, or a reverse proxy in front of it.
 
 ## 1. Get the files
 
 ```sh
 mkdir croustypatch && cd croustypatch
 curl -fsSLO {{repoUrl}}/raw/main/deploy/docker-compose.yml
-curl -fsSLO {{repoUrl}}/raw/main/deploy/.env.example
-cp .env.example .env
+curl -fsSLo .env {{repoUrl}}/raw/main/deploy/.env.example
 chmod 600 .env
 ```
 
+(Or clone the repository and use its `deploy/` directory.)
+
 ## 2. Set the secrets
 
-Fill in `.env`. The database password and the master key are random values you generate once:
+Two values are required. Generate them straight into `.env`:
 
 ```sh
-printf 'CROUSTYPATCH_DB_PASSWORD=%s\nCROUSTYPATCH_MASTER_KEY=%s\n' "$(openssl rand -hex 24)" "$(openssl rand -base64 32)" >> .env
+sed -i "s|^CROUSTYPATCH_DB_PASSWORD=.*|CROUSTYPATCH_DB_PASSWORD=$(openssl rand -hex 24)|" .env
+sed -i "s|^CROUSTYPATCH_MASTER_KEY=.*|CROUSTYPATCH_MASTER_KEY=$(openssl rand -base64 32)|" .env
 ```
 
-> **Back up the master key separately from the database.** It encrypts the sensitive columns (such as an AI API key) and derives the session key. Lose it and those values cannot be recovered; leak it together with a database dump and the encryption is defeated.
+Then edit `.env` for the rest:
+
+- `CROUSTYPATCH_VERSION`: pin a release tag such as `1.0.0` (recommended). `latest` follows the newest release.
+- `CROUSTYPATCH_TLS_SAN`: the name or address you will use, for example `patch.example.com,10.0.0.5`. Set it **before the first start**, since the certificate is created then.
+- `CROUSTYPATCH_BOOTSTRAP_PASSWORD` (optional, 12 characters or more): the first-login password. Empty means a random one is printed once in the log.
+
+> **Back up the master key now**, separately from the database (copy `CROUSTYPATCH_MASTER_KEY` to a password manager). It encrypts the sensitive columns (such as an AI API key) and derives the session key. Lose it and those values cannot be recovered; leak it together with a database dump and the encryption is defeated.
 
 ## 3. Start it
 
 ```sh
-docker compose pull
 docker compose up -d
-docker compose logs server | head -30     # shows the bootstrap password once
+docker compose ps                        # both services should become "healthy"
+docker compose logs server | head -30    # the first-login password, shown once
 ```
 
-Migrations run automatically at start.
+The server listens on `https://<host>:8443` with a self-signed TLS 1.3 certificate. Migrations run automatically at start. For a certificate your browsers trust, use a reverse proxy (below).
 
 ## 4. First login
 
-Open `https://patch.example.com` and sign in as `admin` with the password printed in the log (or the value of `CROUSTYPATCH_BOOTSTRAP_PASSWORD` if you set it; then it is not printed). You are asked to change it right away.
+Open `https://<host>:8443` and sign in as `admin` with the password from the log (or the one you set). You must change it straight away.
 
-Create your own administrator under **Accounts**, then turn the fallback account off so the bootstrap one cannot be used:
+Create your own administrator under **Administration**, then turn the fallback account off so the bootstrap one cannot be used:
 
 ```sh
 docker compose exec server croustypatch-server admin disable --super-admin-fallback
@@ -58,20 +65,26 @@ The command refuses to run if no other enabled account can manage users, so you 
 
 ## 5. Enrol your first agent
 
-In the web interface click **Add agent**, choose the mode, group and environment, and **Generate the command**. Run the one-liner it shows as root on the machine:
+In the web interface choose **Add agent**. The wizard shows a one-line command for Linux with a one-time token that expires. Run it as root on the machine to manage:
 
 ```sh
 curl -fsSL https://patch.example.com/api/v1/agent/install.sh | sudo env CROUSTYPATCH_ENROLL_TOKEN=cpt_xxxxxxxx sh
 ```
 
-The wizard waits for the agent and confirms when the host appears. See [Add and manage agents](/docs/agents/) for options.
+The agent installs itself as a service and the host appears within seconds. With a self-signed certificate the wizard's command also tells the agent which certificate to trust. See [Add and manage agents](/docs/agents/) for the options.
 
-## TLS and reverse proxy
+## Reverse proxy and TLS
 
-- **direct** (default): the server speaks HTTPS, TLS 1.3 only. Mount your certificate and set `CROUSTYPATCH_TLS_CERT` and `CROUSTYPATCH_TLS_KEY`, or let it create a self-signed one in its data volume; agents then pin it with `--ca-file`.
-- **proxy**: set `CROUSTYPATCH_TLS_MODE=proxy` and list your proxy in `CROUSTYPATCH_TRUSTED_PROXIES`. The server then speaks plain HTTP and reads `X-Forwarded-*` only from those peers.
+For a public name and a trusted certificate, run the server behind a reverse proxy (Caddy, Traefik, nginx and others) that terminates TLS. In `.env`:
 
-The proxy must pass the WebSocket upgrade for the agent tunnel (`/api/v1/agent/ws`). With nginx:
+```ini
+CROUSTYPATCH_TLS_MODE=proxy
+CROUSTYPATCH_BIND=127.0.0.1                  # publish the plain-HTTP port to the proxy only
+CROUSTYPATCH_PORT=8443
+CROUSTYPATCH_TRUSTED_PROXIES=172.18.0.1      # the proxy's address as the container sees it
+```
+
+The server honours `X-Forwarded-*` headers **only from the addresses in `CROUSTYPATCH_TRUSTED_PROXIES`**. With the port published by Docker the proxy usually appears as the bridge gateway; check the server log if client addresses look wrong. The proxy must forward to `http://127.0.0.1:8443` and keep WebSocket upgrades working, because agents connect over a WebSocket (`/api/v1/agent/ws`). With nginx:
 
 ```nginx
 location / {
@@ -87,36 +100,59 @@ location / {
 }
 ```
 
-## Upgrade
+### Your own certificate (direct mode)
 
-Back up first (below), then pull the new image and restart. Migrations apply at start.
+Add a `compose.override.yml` next to `docker-compose.yml`:
 
-```sh
-docker compose pull
-docker compose up -d
+```yaml
+services:
+  server:
+    environment:
+      CROUSTYPATCH_TLS_CERT: /certs/fullchain.pem
+      CROUSTYPATCH_TLS_KEY: /certs/privkey.pem
+    volumes:
+      - ./certs:/certs:ro
 ```
 
-To pin a version instead of following a tag, set it in the image reference of your Compose file. See [Releases and updates](/docs/releases/) for what to read before upgrading and how agents follow.
+```sh
+docker compose -f docker-compose.yml -f compose.override.yml up -d
+```
+
+## Upgrade
+
+1. Read the [release notes]({{releasesUrl}}) and take a backup (below).
+2. Set `CROUSTYPATCH_VERSION` in `.env` to the new version.
+3. Pull and restart:
+
+```sh
+docker compose pull && docker compose up -d
+```
+
+Database migrations apply when the server starts. To go back, restore the backup taken before the upgrade and set the previous version again, since newer migrations are not always reversible. See [Releases and updates](/docs/releases/).
 
 ## Backup and restore
 
-Back up two things, and keep them apart: the **database** and the **master key**.
+The data lives in two named volumes: `pgdata` (the database) and `serverdata` (the generated certificate and the agent binaries served to new hosts). Back up the database with `pg_dump`, and the master key separately:
 
 ```sh
-# database dump
-docker compose exec -T postgres pg_dump -U croustypatch -Fc croustypatch > croustypatch-$(date +%F).dump
-# the master key lives in your .env: store it in a password manager or a separate vault
+docker compose exec -T database pg_dump -U croustypatch -d croustypatch | gzip > croustypatch-$(date +%Y%m%d-%H%M).sql.gz
 ```
 
-Restore into a fresh stack (same master key in `.env`):
+Restore into an empty database (a fresh install):
 
 ```sh
-docker compose up -d postgres
-docker compose exec -T postgres pg_restore -U croustypatch -d croustypatch --clean --if-exists < croustypatch-2026-11-13.dump
+docker compose up -d database
+gunzip -c croustypatch-YYYYMMDD-HHMM.sql.gz | docker compose exec -T database psql -U croustypatch -d croustypatch
 docker compose up -d
 ```
 
-You can verify the audit log's integrity from the UI (**Audit**, verify the chain) or with `GET /api/v1/audit/verify`, and export its head hash to keep elsewhere.
+Use the **same master key** as when the backup was taken. Afterwards you can check the audit log's integrity from the UI (**Audit**, verify the chain).
+
+## Everyday commands
+
+- Logs: `docker compose logs -f server`. The health endpoint is `/api/v1/health`.
+- Stop: `docker compose down` keeps the data; `docker compose down -v` deletes the volumes, and with them the database.
+- The server container runs as an unprivileged user with a read-only root file system and no capabilities.
 
 ## Configuration reference
 
