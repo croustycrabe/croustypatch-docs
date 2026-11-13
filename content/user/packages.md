@@ -12,4 +12,4 @@ The **Packages** page shows every package across the whole fleet, paged by the s
 
 The **Vulnerabilities** page lists CVEs reported for the pending updates, with their CVSS score and whether they are known to be exploited. The policy engine uses the same data to rate risk: see [Policies](/docs/policies/).
 
-How much CVE information you get depends on the package manager: apt reports a security flag but no CVE ids; pacman needs `arch-audit`; FreeBSD uses `pkg audit`. See [Add and manage agents](/docs/agents/).
+How much CVE information you get depends on the package manager: apt reports a security flag but no CVE ids; pacman needs `arch-audit`. See [Add and manage agents](/docs/agents/).

@@ -21,7 +21,6 @@ Every patch on the agent follows the same pipeline, whatever the package manager
 |---|---|
 | apt | Version pins; refuses if the previous version cannot be fetched |
 | pacman | Pins plus the package files in the pacman cache. Always a full `-Syu`, since Arch forbids partial upgrades |
-| FreeBSD pkg | `pkg create` archives, plus a ZFS boot environment when available |
 | Docker | The image ID each container runs now |
 
 `croustypatch-agent doctor` rehearses this stage and reports what could not be restored.
@@ -30,7 +29,7 @@ Every patch on the agent follows the same pipeline, whatever the package manager
 
 If the rollback fails, or services stay unhealthy after it:
 
-1. **Isolate**: a firewall table (`nft` on Linux, `pf` on FreeBSD) keeps only the server's addresses reachable, plus inbound SSH by default. DNS is cut. If the platform cannot guarantee isolation, it is refused rather than silently ineffective.
+1. **Isolate**: a firewall table (`nft`) keeps only the server's addresses reachable, plus inbound SSH by default. DNS is cut. If the platform cannot guarantee isolation, it is refused rather than silently ineffective.
 2. **Freeze evidence**: logs, package state and the restore point, with a SHA-256 manifest.
 3. **Report `quarantined`**. The host is excluded from automatic and manual patches until an operator uses *Restore the network*.
 
@@ -40,7 +39,7 @@ A failure before anything was changed, such as a pull that fails or a registry t
 
 ## Reboots
 
-The agent detects when a restart is needed (`/var/run/reboot-required` on apt, a missing running-kernel module directory on pacman, `freebsd-version -k` against `uname -r` on FreeBSD). The server then marks the host in *planned downtime* for the warning delay plus 15 minutes so supervision stays quiet, and fails the task and alerts if the host does not return.
+The agent detects when a restart is needed (`/var/run/reboot-required` on apt, a missing running-kernel module directory on pacman). The server then marks the host in *planned downtime* for the warning delay plus 15 minutes so supervision stays quiet, and fails the task and alerts if the host does not return.
 
 ## Docker specifics
 

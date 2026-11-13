@@ -9,7 +9,7 @@ CroustyPatch is a patch-management and automated-remediation platform in 100 % R
 | Part | Location | Role |
 |---|---|---|
 | **Server** | `server/` | REST API, WebSocket gateway, policy engine, planner, scheduler, notifications, audit log. Serves the web interface. |
-| **Agent** | `agent/` | Root-privileged binary on each Linux or FreeBSD host: inventory, patching, rollback, quarantine, local app center. |
+| **Agent** | `agent/` | Root-privileged binary on each Linux host: inventory, patching, rollback, quarantine, local app center. |
 | **Common** | `common/` | The wire protocol, signed commands, JWT and crypto primitives shared by both sides. |
 | **Web UI** | `frontend/` | Next.js static export, embedded and served by the server. |
 | **Desktop app center** | `portal-gui/` | A Tauri window for laptops and workstations, built separately. |

@@ -9,7 +9,7 @@ This page takes you from an empty server to a first host patched under a policy.
 ## 1. What you need
 
 - A 64-bit Linux host or container for the **server**, and PostgreSQL 14 or newer (the Docker setup below brings its own).
-- At least one machine to manage: Linux with **apt** or **pacman**, or FreeBSD with **pkg**. You need root on it.
+- At least one machine to manage: Linux with **apt** or **pacman**. You need root on it.
 
 ## 2. Start the server
 

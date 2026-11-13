@@ -42,4 +42,4 @@ Each database test creates its own temporary database and drops it afterwards, s
 
 ## Not covered
 
-The apt, pacman and FreeBSD command paths are tested through parsers and a mock backend, not on those systems, and firewall rules are generated and checked but not applied to a live host.
+The apt and pacman command paths are tested through parsers and a mock backend, not on those systems, and firewall rules are generated and checked but not applied to a live host.

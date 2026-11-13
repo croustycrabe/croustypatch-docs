@@ -6,6 +6,7 @@ import '@fontsource/roboto-mono/700.css';
 import './tokens.css';
 import './globals.css';
 import './brand.css';
+import { site } from '@/lib/site';
 import Header from '@/components/Header';
 
 export const metadata: Metadata = {
@@ -25,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <footer className="site-footer">
-          <p>CroustyPatch is a Croustylab project by Croustycrabe. This documentation describes the released product.</p>
+          <p>CroustyPatch is a Croustylab project by Croustycrabe. This documentation describes the released product. <a href={site.repoUrl}>Source on GitHub</a> · <a href={site.releasesUrl}>Releases</a></p>
         </footer>
       </body>
     </html>

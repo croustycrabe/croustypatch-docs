@@ -41,4 +41,4 @@ Applying a Docker tag edits only the `image:` line of a compose file, on a signe
 - Operational messages written by the server and agents are in English whatever the interface language.
 - A task in flight is lost if the agent restarts; the server marks it failed after 90 minutes of silence.
 - OIDC/SSO, SMS and SIEM export are not implemented yet.
-- The apt, pacman and FreeBSD paths are covered by parsers and a mock backend in the test suite; firewall rules are generated and checked but the suite does not apply them to a live host.
+- The apt and pacman paths are covered by parsers and a mock backend in the test suite; firewall rules are generated and checked but the suite does not apply them to a live host.

@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import { Marked } from 'marked';
+import { site } from './site';
 
 export type Section = 'user' | 'tech';
 export type Heading = { id: string; text: string; depth: number };
@@ -55,7 +56,10 @@ export function getDocs(section: Section): Doc[] {
   if (hit) return hit;
   const dir = path.join(process.cwd(), 'content', section);
   const docs = fs.readdirSync(dir).filter((f) => f.endsWith('.md')).map((file) => {
-    const { data, content } = matter(fs.readFileSync(path.join(dir, file), 'utf8'));
+    const parsed = matter(fs.readFileSync(path.join(dir, file), 'utf8'));
+    const data = parsed.data;
+    // {{owner}}, {{repoUrl}}, {{releasesUrl}}, {{issuesUrl}}, {{image}} come from lib/site.ts
+    const content = parsed.content.replace(/\{\{(\w+)\}\}/g, (m, k: string) => (site as Record<string, string>)[k] ?? m);
     const { html, headings } = render(content);
     return {
       section, slug: file.replace(/\.md$/, ''), title: String(data.title), description: String(data.description ?? ''),

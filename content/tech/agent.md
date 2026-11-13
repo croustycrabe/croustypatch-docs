@@ -9,14 +9,14 @@ The agent is a single Rust binary (`croustypatch-agent`) installed as a service.
 ## Responsibilities
 
 - **Inventory**: installed packages, pending updates, security flags and CVE ids where the package manager provides them, hardware facts and, on Linux, resource metrics.
-- **Patching** through apt, pacman or FreeBSD `pkg`, with the [pipeline](/technical/patch-pipeline/).
+- **Patching** through apt or pacman, with the [pipeline](/technical/patch-pipeline/).
 - **Modules**: Docker (images, registry checks, compose updates), helper-script detection and the app-center relay. Each is detected by the agent and only runs when the server switches it on for the host.
-- **Isolation**: firewall quarantine through `nft` or `pf`.
+- **Isolation**: firewall quarantine through `nft`.
 - **Self-update**: the agent downloads the new build named in a signed order, checks its SHA-256, makes sure it starts and prints the expected version, swaps it in place and exits so the service manager restarts it. Any failure leaves the running binary untouched.
 
 ## Source layout
 
-`runner` (the pipeline), `pkg/` (one backend per package manager plus a mock), `exec` (confined execution), `isolate`, `health` (probes), `link` (tunnel and telemetry), `identity`, `reboot`, `selfupdate`, `portal` and `tui` (app center), `modules/` and `preflight`.
+`runner` (the pipeline), the package-manager backends (apt and pacman, plus a mock), `exec` (confined execution), `isolate`, `health` (probes), `link` (tunnel and telemetry), `identity`, `reboot`, `selfupdate`, `portal` and `tui` (app center), `modules/` and `preflight`.
 
 ## Safety properties
 

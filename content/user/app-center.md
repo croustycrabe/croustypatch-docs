@@ -10,7 +10,7 @@ The app center lets an administrator publish a catalog of applications, and lets
 
 Under **App center > Catalog** (permission `settings:write`) an application has a name, version, category, description, icon, installation instructions per system and the host groups that see it (none means every host).
 
-- **Installation per system**: one entry per package manager (`apt`, `pacman`, `pkg`, `dnf`) and/or a catch-all, so one catalog entry can be `fd-find` on Debian and `fd` on Arch.
+- **Installation per system**: one entry per package manager (`apt`, `pacman`, `dnf`) and/or a catch-all, so one catalog entry can be `fd-find` on Debian and `fd` on Arch.
 - **Packages** are installed and removed by the agent's package manager.
 - **Commands** (internal tools, vendor installers) run as root, so creating or editing one needs the extra `portal:commands` permission. Never put a secret in a command: it is stored and shown in clear.
 - **Suggestions**: a built-in list of common applications you can copy into the catalog and adjust.
