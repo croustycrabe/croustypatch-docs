@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <footer className="site-footer">
-          <p>CroustyPatch is a Croustylab project by Croustycrabe. This documentation describes the released product. <a href={site.repoUrl}>Source on GitHub</a> · <a href={site.releasesUrl}>Releases</a></p>
+          <p><img className="foot-logo" src="/brand/crab-logo-mono-cream.svg" alt="" width="30" height="20" />CroustyPatch is a Croustylab project by Croustycrabe. This documentation describes the released product. <a href={site.repoUrl}>Source on GitHub</a> · <a href={site.releasesUrl}>Releases</a> · <a href="/roadmap/">Roadmap</a></p>
         </footer>
       </body>
     </html>

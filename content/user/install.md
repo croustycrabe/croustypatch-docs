@@ -6,8 +6,6 @@ group: Get started
 ---
 The server ships as a container image, **`{{image}}`**, and runs next to a PostgreSQL 17 container. One Compose file runs both, and everything is configured from a `.env` file.
 
-> `OWNER` in the image name stands for the GitHub account that publishes it: see the [project on GitHub]({{repoUrl}}).
-
 ## Requirements
 
 - A 64-bit Linux host with Docker and the Compose plugin (v2), and `openssl`.

@@ -8,7 +8,7 @@ body { font-size: 15px; line-height: 1.7; }
 .site-footer { border-top: var(--border-width) solid var(--line); }
 .hero { border-bottom: var(--border-width) solid var(--line); background-color: var(--surface);
   background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 32px 32px; }
-.logo { border: var(--border-width) solid var(--line); border-radius: var(--radius-sm); box-shadow: 2px 2px 0 0 var(--shadow-color); font-size: .9rem; }
+.logo { font-size: .9rem; }
 .brand { font-size: .95rem; }
 .brand span:last-child::before { content: "[ "; color: var(--primary-text); }
 .brand span:last-child::after { content: " ]"; color: var(--primary-text); }
@@ -241,7 +241,7 @@ body:has(.doc-shell) .bar { max-width: 90rem; }
 @media (max-width: 640px) {
   .bar { gap: .4rem; padding: .5rem .75rem; }
   .brand { font-size: .8rem; margin-right: 0; gap: .35rem; }
-  .brand .logo { width: 24px; height: 24px; font-size: .8rem; }
+  .brand .logo, .brand .logo img { width: 30px; }
   .main-nav { margin-left: auto; }
   .main-nav a { padding: .25rem .45rem; font-size: .8rem; }
   .icon-btn { margin-left: 0; width: 34px; height: 34px; }
@@ -251,3 +251,14 @@ body:has(.doc-shell) .bar { max-width: 90rem; }
 .site-footer a { color: var(--brick-light, #d0786b); }
 .icon-btn.gh { text-decoration: none; }
 @media (max-width: 640px) { .icon-btn.gh { display: none; } }
+
+/* roadmap */
+.roadmap-lane { margin: 2rem 0 0; }
+.roadmap-lane > h2 { font-size: 1.15rem; margin: 0 0 .75rem; }
+.roadmap-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .75rem; }
+.roadmap-item { display: grid; grid-template-columns: auto 1fr; gap: .25rem 1rem; padding: 1rem 1.1rem; background: var(--surface); border: var(--border-width, 1px) solid var(--line, var(--border)); border-radius: var(--radius-sm, 8px); }
+.roadmap-item h3 { margin: 0; font-size: 1.05rem; grid-column: 2; }
+.roadmap-item p { margin: 0; grid-column: 2; color: var(--fg-muted); font-size: .95rem; }
+.roadmap-dot { grid-row: 1 / span 2; align-self: start; margin-top: .4rem; width: .7rem; height: .7rem; border-radius: 50%; background: var(--primary); }
+.roadmap-lane.later .roadmap-dot { background: transparent; border: 2px solid var(--primary-text); }
+.roadmap-tag { display: inline-block; margin-left: .5rem; padding: .05rem .5rem; border: 1px solid var(--border-strong, var(--border)); border-radius: 999px; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-muted); font-family: var(--font-sans); vertical-align: middle; }

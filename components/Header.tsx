@@ -9,7 +9,10 @@ export default function Header() {
     <header className="site-header">
       <div className="bar">
         <Link href="/" className="brand" aria-label="CroustyPatch documentation, home">
-          <span className="logo" aria-hidden="true">C</span><span>CroustyPatch</span>
+          <span className="logo" aria-hidden="true">
+            <img className="shot-light" src="/brand/crab-logo.svg" alt="" width="36" height="24" />
+            <img className="shot-dark" src="/brand/crab-logo-dark.svg" alt="" width="36" height="24" />
+          </span><span>CroustyPatch</span>
         </Link>
         <NavLinks />
         <Search />

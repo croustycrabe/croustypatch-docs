@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 
 export default function NavLinks() {
   const path = usePathname() ?? '';
-  const items = [['/docs/', 'docs'], ['/technical/', 'technical']] as const;
+  const items = [['/docs/', 'docs'], ['/technical/', 'technical'], ['/roadmap/', 'roadmap']] as const;
   return (
     <nav aria-label="Main" className="main-nav">
       {items.map(([href, label]) => (

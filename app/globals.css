@@ -14,7 +14,9 @@ a:hover { color: var(--primary-hover); }
 .bar { max-width: var(--container); margin: 0 auto; padding: .6rem 1rem; display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
 .brand { display: flex; align-items: center; gap: .5rem; font-family: var(--font-display); font-size: 1.05rem; color: var(--fg); text-decoration: none; margin-right: .5rem; }
 .brand:hover { color: var(--fg); }
-.logo { display: grid; place-items: center; width: 28px; height: 28px; background: var(--primary); color: var(--primary-fg); border-radius: 6px; font-size: .95rem; }
+.logo { display: grid; place-items: center; width: 36px; height: 28px; }
+.logo img { display: block; width: 36px; height: auto; }
+.foot-logo { display: inline-block; vertical-align: middle; margin-right: .6rem; }
 .main-nav { display: flex; gap: .25rem; }
 .main-nav a { color: var(--fg); text-decoration: none; padding: .3rem .6rem; border-radius: 6px; font-weight: 500; font-size: .95rem; }
 .main-nav a:hover { background: var(--surface-hover); }
