@@ -98,7 +98,7 @@
  {
   "file": "app-center-light.webp",
   "title": "App center",
-  "caption": "Approved applications, installed or needing an update, for each machine.",
+  "caption": "Approved applications per machine, with All, Installed, Needs update and Not installed filters and their counts.",
   "theme": "light",
   "width": 1440,
   "height": 900
@@ -106,7 +106,7 @@
  {
   "file": "app-center-dark.webp",
   "title": "App center",
-  "caption": "Approved applications, installed or needing an update, for each machine.",
+  "caption": "Approved applications per machine, with All, Installed, Needs update and Not installed filters and their counts.",
   "theme": "dark",
   "width": 1440,
   "height": 900

@@ -4,6 +4,8 @@ import Slider from '@/components/Slider';
 import Reveal from '@/components/Reveal';
 import FeatureTabs, { Feature } from '@/components/FeatureTabs';
 import Shot from '@/components/Shot';
+import ProductVideo from '@/components/ProductVideo';
+import fs from 'node:fs';
 import HeroPipeline from '@/components/HeroPipeline';
 import PatchFlow from '@/components/PatchFlow';
 
@@ -32,7 +34,12 @@ const cards = [
   ['AI, with a leash', 'An OpenAI-compatible model can rate risk but lower it by one level at most. An MCP server lets assistants request patches that wait for a human.'],
 ] as const;
 
+const has = (f: string) => fs.existsSync(`${process.cwd()}/public/video/${f}`);
+
 export default function Home() {
+  const video = has('product-flow-poster.webp') && (has('product-flow.webm') || has('product-flow.mp4'))
+    ? { webm: has('product-flow.webm') ? '/video/product-flow.webm' : undefined, mp4: has('product-flow.mp4') ? '/video/product-flow.mp4' : undefined, poster: '/video/product-flow-poster.webp' }
+    : null;
   const slides = getSlides();
   const phone = getSlides({ phone: true })[0];
   return (
@@ -56,10 +63,21 @@ export default function Home() {
         </div>
       </section>
 
+      {video && (
+        <section className="page" aria-labelledby="flow-video">
+          <Reveal>
+            <p className="eyebrow">01 · A TYPICAL FLOW</p>
+            <h2 className="section-title" id="flow-video">From the fleet to a running update</h2>
+            <p className="lede narrow">Pick a host in the list, open it and start an update, in a few clicks.</p>
+          </Reveal>
+          <Reveal delay={80}><ProductVideo {...video} label="Screen recording of the web interface: the hosts list, a host, and starting a system update" /></Reveal>
+        </section>
+      )}
+
       {slides.length > 0 && (
         <section className="page" aria-labelledby="see-it">
           <Reveal>
-            <p className="eyebrow">01 · THE INTERFACE</p>
+            <p className="eyebrow">02 · THE INTERFACE</p>
             <h2 className="section-title" id="see-it">See it at work</h2>
             <p className="lede narrow">Real screens of the web interface, with demo data. Swipe, use the arrows or the keyboard.</p>
           </Reveal>
@@ -69,7 +87,7 @@ export default function Home() {
 
       <section className="page" aria-labelledby="what">
         <Reveal>
-          <p className="eyebrow">02 · FEATURES</p>
+          <p className="eyebrow">03 · FEATURES</p>
           <h2 className="section-title" id="what">What it does</h2>
         </Reveal>
         <Reveal delay={80}><FeatureTabs features={features} shots={slides} /></Reveal>
@@ -77,7 +95,7 @@ export default function Home() {
 
       <section className="page" aria-labelledby="flow">
         <Reveal>
-          <p className="eyebrow">03 · THE PIPELINE</p>
+          <p className="eyebrow">04 · THE PIPELINE</p>
           <h2 className="section-title" id="flow">What happens to a patch</h2>
         </Reveal>
         <PatchFlow />
@@ -86,7 +104,7 @@ export default function Home() {
       {phone && (
         <section className="page phone-sec" aria-labelledby="phone">
           <Reveal className="phone-text">
-            <p className="eyebrow">04 · EVERY SCREEN</p>
+            <p className="eyebrow">05 · EVERY SCREEN</p>
             <h2 className="section-title" id="phone">In your pocket, too</h2>
             <p className="lede">The interface folds to a drawer on phones and keeps every action, so you can approve a patch from the train.</p>
           </Reveal>
@@ -95,7 +113,7 @@ export default function Home() {
       )}
 
       <section className="page" aria-labelledby="more">
-        <Reveal><p className="eyebrow">05 · AND ALSO</p><h2 className="section-title" id="more">Built to be trusted</h2></Reveal>
+        <Reveal><p className="eyebrow">06 · AND ALSO</p><h2 className="section-title" id="more">Built to be trusted</h2></Reveal>
         <div className="cards">
           {cards.map(([t, d], k) => (
             <Reveal key={t} delay={k * 80} className="card static"><strong>{t}</strong><span>{d}</span></Reveal>
@@ -104,7 +122,7 @@ export default function Home() {
       </section>
 
       <section className="page" aria-labelledby="fit">
-        <Reveal><p className="eyebrow">06 · ARCHITECTURE</p><h2 className="section-title" id="fit">How it fits together</h2></Reveal>
+        <Reveal><p className="eyebrow">07 · ARCHITECTURE</p><h2 className="section-title" id="fit">How it fits together</h2></Reveal>
         <Reveal delay={80}>
           <div className="flow" role="img" aria-label="Agents on each host connect to the server, which serves the web interface and stores everything in PostgreSQL">
             <div><b>Agent</b><span>Rust, runs as root on each host. Inventory, patching, rollback, quarantine.</span></div>
