@@ -12,6 +12,7 @@ const next: Item[] = [
   { title: 'A native UI for the app center', text: 'The desktop app center runs on Tauri and a web view today. A native interface remains the goal; an earlier attempt was set aside until the toolkit and the packaging are ready.' },
   { title: 'More Linux distributions', text: 'Hosts running apt (Debian, Ubuntu) and pacman (Arch) are covered today. Next: the Red Hat family with dnf (Fedora, RHEL, Rocky, AlmaLinux) and other distributions after that.' },
   { title: 'ARM64 builds', text: 'The server image and the agent are built for amd64. ARM64 (aarch64) builds will follow, so that boards and ARM servers can be managed alongside the rest of the fleet.' },
+  { title: 'Single sign-on with OIDC', text: 'Sign in with an OpenID Connect identity provider (Keycloak, Authentik, Entra ID, Google and others) instead of local passwords only, with roles mapped from the provider\'s groups.' },
   { title: 'FreeBSD', text: 'FreeBSD support was removed from the current release so that it can be rebuilt properly: package backend, service integration and quarantine rules.' },
 ];
 function Lane({ title, items, cls }: { title: string; items: Item[]; cls: string }) {
