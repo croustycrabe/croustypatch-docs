@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import '@fontsource/rubik/400.css';
-import '@fontsource/rubik/500.css';
-import '@fontsource/rubik/700.css';
 import '@fontsource/rubik-one/400.css';
 import '@fontsource/roboto-mono/400.css';
+import '@fontsource/roboto-mono/500.css';
+import '@fontsource/roboto-mono/700.css';
 import './tokens.css';
 import './globals.css';
+import './brand.css';
 import Header from '@/components/Header';
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head>
       <body>
-        <a href="#main" className="skip">Skip to the content</a>
+        <a href="#main" className="skip">skip to the content</a>
         <Header />
         <main id="main">{children}</main>
         <footer className="site-footer">

@@ -14,7 +14,7 @@ export default function DocPage({ section, doc }: { section: Section; doc: Doc }
   }
   return (
     <div className="doc-shell">
-      <details className="side-wrap">
+      <details className="side-wrap side-mobile">
         <summary>{SECTIONS[section].label}: {doc.title}</summary>
         <nav className="side" aria-label={SECTIONS[section].label}>
           {groups.map((g) => (
@@ -27,6 +27,18 @@ export default function DocPage({ section, doc }: { section: Section; doc: Doc }
           ))}
         </nav>
       </details>
+      <div className="side-wrap side-desktop">
+        <nav className="side" aria-label={SECTIONS[section].label}>
+          {groups.map((g) => (
+            <div key={g.name}>
+              {g.name && <p className="side-group">{g.name}</p>}
+              {g.items.map((d) => (
+                <Link key={d.slug} href={docUrl(d)} aria-current={d.slug === doc.slug ? 'page' : undefined}>{d.title}</Link>
+              ))}
+            </div>
+          ))}
+        </nav>
+      </div>
       <article className="prose">
         <p className="crumb">{SECTIONS[section].label}</p>
         <h1>{doc.title}</h1>
